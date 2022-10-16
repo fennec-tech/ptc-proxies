@@ -1,0 +1,50 @@
+version: '3.6'
+# name: $PROJECT_NAME
+services:
+  # Docker registry using the official image
+  docker:
+    environment:
+      - DOCKER_REGISTRY_PORT
+    image: registry:2
+    ports:
+      - $DOCKER_REGISTRY_PORT:5000
+    volumes:
+      - ./data/docker:/var/lib/registry
+      - ./config/docker/config.yml:/etc/docker/registry/config.yml:ro
+    restart: unless-stopped
+    user: 1000:1000
+
+  # apt-cacher-ng server image built on top of ubuntu
+  apt:
+    environment:
+      - APT_CACHER_NG_PORT
+    image: deployable/apt-cacher-ng
+    ports:
+      - $APT_CACHER_NG_PORT:3142
+    restart: unless-stopped
+    volumes:
+      - ./data/apt:/var/cache/apt-cacher-ng
+  # pypicloud index using 
+  pip:
+    image: stevearc/pypicloud
+    environment:
+      - PYPICLOUD_PORT
+    ports:
+      - $PYPICLOUD_PORT:8080
+    restart: unless-stopped
+    volumes:
+      - ./data/pip:/var/lib/pypicloud/packages
+      - ./config/pip/config.ini:/etc/pypicloud/config.ini:ro
+  # npm registry using verdaccio
+  npm:
+    environment:
+      - VERDACCIO_PORT
+      - VERDACCIO_USER
+    image: verdaccio/verdaccio
+    ports:
+      - $VERDACCIO_PORT:$VERDACCIO_PORT
+    restart: unless-stopped
+    user: $VERDACCIO_USER:$VERDACCIO_USER
+    volumes:
+      - ./data/npm:/verdaccio/storage
+      - ./config/npm/config.yaml:/verdaccio/conf/config.yaml:ro
