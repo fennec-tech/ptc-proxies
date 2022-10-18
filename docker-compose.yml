@@ -24,6 +24,8 @@ services:
     restart: unless-stopped
     volumes:
       - ./data/apt:/var/cache/apt-cacher-ng
+      - ./config/apt/acng.conf:/etc/apt-cacher-ng/acng.conf:ro
+
   # pypicloud index using 
   pip:
     image: stevearc/pypicloud
