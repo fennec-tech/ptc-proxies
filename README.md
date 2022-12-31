@@ -27,7 +27,7 @@ git clone https://github.com/fennec-tech/ptc-proxies
 You can edit `.env` file to change the ports defined for each service.
 
  The default ports are as follow:
-- Docker (registry) : **7760**
+- Docker (Registry) : **7760**
 - apt (AptCacherNg) : **7761**
 - pip (Pypicloud) : **7762**
 - npm (Verdaccio): **7763**
@@ -52,6 +52,9 @@ docker-compose up -d
 
 If the problem persists, then try rebooting your machine.
 If it's still unsolved, then you can contact us and file a [GitHub issue](https://github.com/fennec-tech/ptc-proxies/issues)
+
+### 6. Volume permissions
+In order to make server configuration easier, we opted to run `pip` and `npm` containers as `root`, which is not the recommended practice. This is just to avoid running additional commands to set volume permissions for verdaccio and pypicloud.
 
 ---
 ## Client Configuration
