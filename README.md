@@ -54,7 +54,14 @@ If the problem persists, then try rebooting your machine.
 If it's still unsolved, then you can contact us and file a [GitHub issue](https://github.com/fennec-tech/ptc-proxies/issues)
 
 ### 6. Volume permissions
-In order to make server configuration easier, we opted to run `pip` and `npm` containers as `root`, which is not the recommended practice. This is just to avoid running additional commands to set volume permissions for verdaccio and pypicloud.
+In order for our proxies to cache files, permissions, need to be adjusted. After starting containers, please run the following commands.
+```
+# for pypicloud (pip)
+docker exec -it ptc-pip-1 bash -c 'chown -R pypicloud:pypicloud /var/lib/pypicloud/packages'
+
+# for verdaccio (npm)
+docker exec -it ptc-npm-1 bash -c 'chown -R verdaccio:verdaccio /verdaccio/storage'
+```
 
 ---
 ## Client Configuration
