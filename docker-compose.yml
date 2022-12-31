@@ -37,6 +37,7 @@ services:
     volumes:
       - ./data/pip:/var/lib/pypicloud/packages
       - ./config/pip/config.ini:/etc/pypicloud/config.ini:ro
+    user: root:root
   # npm registry using verdaccio
   npm:
     environment:
@@ -46,7 +47,7 @@ services:
     ports:
       - $VERDACCIO_PORT:$VERDACCIO_PORT
     restart: unless-stopped
-    user: $VERDACCIO_USER:$VERDACCIO_USER
+    user: root:root
     volumes:
       - ./data/npm:/verdaccio/storage
       - ./config/npm/config.yaml:/verdaccio/conf/config.yaml:ro

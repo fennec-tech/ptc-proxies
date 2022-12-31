@@ -24,7 +24,6 @@ git clone https://github.com/fennec-tech/ptc-proxies
 ```
 
 ### 3. Configuration
-Make a copy of `.env.example` to `.env`.
 You can edit `.env` file to change the ports defined for each service.
 
  The default ports are as follow:
